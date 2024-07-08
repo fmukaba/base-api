@@ -25,10 +25,3 @@ app.add_middleware(
 
 app.include_router(auth_router)
 app.include_router(users_router)
-
-
-
-@app.get("/")
-async def read_root():
-    return {"message": "Hello World"}
-
