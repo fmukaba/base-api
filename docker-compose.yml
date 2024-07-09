@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  fastapi:
+    build: .
+    container_name: fastapi_app
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - FERNET_KEY=${FERNET_KEY}
+      - EXPIRE_TIME=${EXPIRE_TIME}
+      - MAX_AGE=${MAX_AGE}
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"

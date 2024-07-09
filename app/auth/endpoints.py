@@ -1,7 +1,6 @@
 from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Request, Response, logger
 from fastapi_login.exceptions import InvalidCredentialsException
-from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from db.database import get_db
 from users.crud import get_user_by_username, pwd_context

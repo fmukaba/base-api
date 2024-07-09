@@ -1,5 +1,5 @@
-from typing import Optional
 from fastapi import HTTPException
+from cryptography.fernet import Fernet
 from functools import wraps
 from users.models import User
 from auth.schemas import SessionData
