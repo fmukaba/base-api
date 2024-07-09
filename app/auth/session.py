@@ -39,13 +39,21 @@ async def set_session(response: Response, data: SessionData) -> str:
     storage =  SessionStorage()
     session_id = await storage.generate_session_id()
     await storage.set_item(session_id, data)
-    response.set_cookie(settings.session_cookie_name, session_id, httponly=True, secure=True, samesite="Lax", max_age=settings.max_age)
+    response.set_cookie(settings.session_cookie_name, 
+                        session_id, 
+                        httponly=True, 
+                        secure=True, 
+                        samesite="Lax", 
+                        max_age=settings.max_age)
     await storage.close()
     return session_id
 
 async def get_session(request: Request) -> Optional[SessionData]:
     storage =  SessionStorage()
     session_id = request.cookies.get(settings.session_cookie_name, "")
+    # extend the session life on every interaction
+    if await storage.client.exists(session_id):
+        await storage.client.expire(session_id, settings.expire_time)
     session_data = await storage.get_item(session_id)
     await storage.close()
     return session_data

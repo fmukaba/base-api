@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import HTTPException
 from functools import wraps
 from users.models import User
@@ -9,15 +10,17 @@ def login_required():
         async def wrapper(*args, **kwargs):
             request = kwargs.get('request')
             session = kwargs.get('session')
-            print(session)
             if not session:
-                raise HTTPException(status_code=401, detail="Not authenticated")
+                delete_session_cookie={'Set-Cookie': 'session=; Max-Age=0; Path=/; HttpOnly'}
+                raise HTTPException(status_code=401, 
+                                    detail="Not authenticated", 
+                                    headers=delete_session_cookie)
             return await func(*args, **kwargs)
         return wrapper
     return decorator
 
 def create_session_data_from_user(user: User) -> SessionData:
-    session_data = SessionData (
+    session_data = SessionData(
         user_id=user.id,
         username=user.username,
         email=user.email

@@ -35,7 +35,7 @@ async def logout(request: Request, session: Optional[SessionData] = Depends(get_
     try:
         await delete_session(request, response)
     except Exception as e:
-        # logger.logger.error(e)
+        logger.logger.error(e)
         raise HTTPException(status_code=500, detail="Logout Failed. Check the logs for more information.")
     return response
 
