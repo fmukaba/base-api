@@ -43,4 +43,7 @@ async def logout(request: Request, session: Optional[SessionData] = Depends(get_
 async def get_sesh_test(request: Request, session: Optional[SessionData] = Depends(get_session)): 
     response = Response(status_code=200)
     print(session)
+    # get info about client device - help list multi device/sessions
+    user_agent = request.headers.get('user-agent')
+    print(user_agent)
     return response

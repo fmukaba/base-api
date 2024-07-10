@@ -11,7 +11,7 @@ class Settings():
     secret_key: str = os.getenv("SECRET_KEY", uuid4().hex)
     fernet_key: str = os.getenv("FERNET_KEY", uuid4().hex)
     database_url: str = os.getenv("DATABASE_URL", "sqlite:///./test.db")
-    redis_url: str = os.getenv("REDIS_URL")
+    redis_url: str = os.getenv("REDIS_URL", "redis://localhost:6379")
     session_cookie_name="session"
     session_expire_time: timedelta = timedelta(hours=6)
     cookie_max_age: int = 3600 * 24
