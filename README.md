@@ -1,6 +1,6 @@
 # Intro
 BaseAPI is a FastAPI backend with Core modules as a base for future freelance projects (Auth, Notifications, Email,...) </br></br>
-Trello board  [Trello](https://trello.com/b/E7HIwW12/baseapi) Board 
+[Trello](https://trello.com/b/E7HIwW12/baseapi) Board 
 ## 0. Prerequisites
   - python3
   - pip3
