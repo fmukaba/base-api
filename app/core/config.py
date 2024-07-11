@@ -14,6 +14,6 @@ class Settings():
     redis_url: str = os.getenv("REDIS_URL", "redis://localhost:6379")
     session_cookie_name="session"
     session_expire_time: timedelta = timedelta(hours=6)
-    cookie_max_age: int = 3600 * 24
+    cookie_max_age: int = 24 * 3600 
 settings = Settings()
 

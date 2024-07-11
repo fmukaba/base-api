@@ -26,6 +26,19 @@ def login_required():
         return wrapper
     return decorator
 
+def admin_restricted():
+    def decorator(func):
+        @wraps(func)
+        async def wrapper(*args, **kwargs):
+            session: Optional[SessionData] = kwargs.get('session')
+            if not session or not session.is_admin:
+                raise HTTPException(status_code=403, 
+                                        detail="Not admin")
+            return await func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+
 def create_session_data_from_user(user: User) -> SessionData:
     session_data = SessionData(
         user_id=user.id,

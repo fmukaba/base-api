@@ -1,11 +1,5 @@
-from sqlalchemy import Column, Integer, String, create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from core.config import settings
-
-engine = create_engine(settings.database_url)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
+from sqlalchemy import Boolean, Column, DateTime, Integer, String, func
+from db.database import Base, engine
 
 class User(Base):
     __tablename__ = "users"
@@ -13,6 +7,11 @@ class User(Base):
     username = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    is_active = Column(Boolean, default=True)
+    is_admin = Column(Boolean, default=False)
+    is_verified = Column(Boolean, default=False)
+    verification_token = Column(String, nullable=True)
 
 # Create the database tables
 Base.metadata.create_all(bind=engine)

@@ -19,3 +19,6 @@ class SessionData(BaseModel):
     @classmethod
     def from_dict(cls, data: dict):
         return cls(**data)
+    
+class JSONClientMetadata(BaseModel):
+    pass
