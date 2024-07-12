@@ -12,6 +12,7 @@ class SessionData(BaseModel):
     user_id: int
     username: str
     email: str
+    is_admin: bool
 
     def to_dict(self):
         return self.model_dump()

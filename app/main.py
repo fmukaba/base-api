@@ -2,8 +2,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
-from auth.endpoints import router as auth_router
-from users.endpoints import router as users_router
+from auth.router import router as auth_router
+from users.router import router as users_router
 from core.config import settings
 
 app = FastAPI()

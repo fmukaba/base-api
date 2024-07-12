@@ -1,7 +1,7 @@
 import json
 from typing import Optional
 from uuid import uuid4
-from fastapi import Request, Response, logger
+from fastapi import Request, Response
 from cryptography.fernet import Fernet
 from redis.asyncio import Redis
 from core.config import settings
@@ -67,7 +67,6 @@ async def get_session(request: Request) -> Optional[SessionData]:
             session_data_dict = json.loads(session_data_json)
             session_data = SessionData.from_dict(session_data_dict)
         except Exception as e:
-            logger.logger(e)
             print(e)
             return None
     await storage.close()
