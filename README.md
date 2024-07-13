@@ -6,6 +6,11 @@ BaseAPI is a FastAPI backend with Core modules as a base for future freelance pr
   - pip3
   - virtualenv [pip3 install virtualenv]
   - redis (I use the docker image)
+  - The following variables must be defined in your environement: </br>
+    `SECRET_KEY` </br>
+    `FERNET_KEY` </br>
+    `REDIS_URL` </br>
+    `DATABASE_URL` 
 
 ## 1. Run:
 - ### Create virtual environment 
