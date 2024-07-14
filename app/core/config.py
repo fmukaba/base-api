@@ -15,5 +15,11 @@ class Settings():
     session_cookie_name="session"
     session_expire_time: timedelta = timedelta(hours=6)
     cookie_max_age: int = 24 * 3600 
+    # email config
+    smtp_server : str = "smtp.gmail.com"
+    smtp_port: int = 587
+    smtp_username: str = os.getenv("SMTP_USERNAME")
+    smtp_password: str = os.getenv("SMTP_PASSWORD") 
+    
 settings = Settings()
 

@@ -5,16 +5,16 @@ from users.schemas import UserCreate
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-def get_user_by_username(db: Session, username: str):
+def get_user_by_username(db: Session, username: str) -> User:
     return db.query(User).filter(User.username == username).first()
 
-def get_user_by_email(db: Session, email: str):
+def get_user_by_email(db: Session, email: str) -> User:
     return db.query(User).filter(User.email == email).first()
 
-def get_user_by_id(db: Session, id: str):
+def get_user_by_id(db: Session, id: str) -> User:
     return db.query(User).get(id)
 
-def create_user(db: Session, user: UserCreate):
+def create_user(db: Session, user: UserCreate) -> User:
     hashed_password = pwd_context.hash(user.password)
     db_user = User(username=user.username, email=user.email, hashed_password=hashed_password)
     db.add(db_user)

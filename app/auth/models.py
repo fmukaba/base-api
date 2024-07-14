@@ -1,6 +1,6 @@
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, create_engine, func, JSON
 from users.models import User
-from app.core.database import Base, engine
+from core.database import Base, engine
 
 class Sessions(Base):
     __tablename__ = "sessions"
