@@ -16,7 +16,7 @@ class SessionStorage:
         return await self.client.get(key)
 
     async def set_item(self, key: str, value: SessionData):
-        await self.client.set(key, value, ex=settings.session_expire_time)
+        await self.client.set(key, value, ex=settings.session_expiry_time)
 
     async def delete_item(self, key: str):
         await self.client.delete(key)
@@ -58,7 +58,7 @@ async def get_session(request: Request) -> Optional[SessionData]:
     session_id = request.cookies.get(settings.session_cookie_name, "")
     # extend the session life on every interaction
     if await storage.client.exists(session_id):
-        await storage.client.expire(session_id, settings.session_expire_time)
+        await storage.client.expire(session_id, settings.session_expiry_time)
     session_data = await storage.get_item(session_id)
     # decrypt stored session data
     if session_data:

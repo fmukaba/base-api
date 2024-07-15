@@ -25,13 +25,13 @@ def send_email(email: MIMEMultipart):
     
 def send_verification_email(email: EmailSchema, verification_url: str):
     html_content = template.render(
-        subject="Email Verification",
+        subject=email.subject,
         recipient_name=email.target,
         verification_url=verification_url
     )
 
     msg = MIMEMultipart('alternative')
-    msg['Subject'] = "Email Verification"
+    msg['Subject'] = email.subject
     msg['From'] = settings.smtp_username
     msg['To'] = email.target
 
