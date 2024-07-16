@@ -55,5 +55,6 @@ async def get_sesh_test(request: Request, session: Optional[SessionData] = Depen
 @router.get("/admin")
 @admin_restricted()
 async def get_sesh_test(request: Request, session: Optional[SessionData] = Depends(get_session)): 
+    print(session)
     response = Response(status_code=200)
     return response

@@ -5,4 +5,5 @@ __pycache__/
 test.db
 alembic/
 alembic.ini
-
+**/*test.db
+**/alembic/*
