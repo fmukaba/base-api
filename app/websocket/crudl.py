@@ -1,9 +1,8 @@
-from uuid import uuid4
-
 import psycopg2
 
 from schemas import Message
 
+# todo: put into config file
 db_params = {
     "host": "",
     "database": "",
@@ -28,19 +27,19 @@ def create_message(message: Message):
         print(f"Error: {error}")
 
 
-def delete_message(message_id: uuid4):
+def delete_message(message_id: int):
     try:
         query = f"DELETE FROM Messages WHERE id = %d;"
-        curr.execute(query, message_id)
+        curr.execute(query, (message_id,))
         conn.commit()
     except (Exception, psycopg2.Error) as error:
         print(f"Error: {error}")
 
 
-def list_messages_by_group_id(group_id: uuid4):
+def list_messages_by_group_id(group_id: int):
     try:
         query = f"SELECT * FROM Messages WHERE group_id = %d;"
-        curr.execute(query, group_id)
+        curr.execute(query, (group_id,))
         return curr.fetchall()
     except (Exception, psycopg2.Error) as error:
         print(f"Error: {error}")

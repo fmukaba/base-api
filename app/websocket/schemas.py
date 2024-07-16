@@ -1,13 +1,12 @@
 from datetime import datetime
-from uuid import uuid4
 
-from pydantic import BaseModel, Unity, Json
+from pydantic import BaseModel
 
 
 class Message(BaseModel):
-    id: uuid4
-    group_id: uuid4
-    sender_id: str
-    message: Unity[str, Json]
+    id: int
+    group_id: int
+    sender_id: int
+    message: str
     created_at: datetime
     updated_at: datetime
