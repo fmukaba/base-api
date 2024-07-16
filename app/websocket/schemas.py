@@ -1,11 +1,13 @@
 from datetime import datetime
+from uuid import uuid4
 
 from pydantic import BaseModel, Unity, Json
 
 
-#todo: change sender to user object. user object should have avatar url
-#todo: isSeen: bool
 class Message(BaseModel):
-    sender: str
+    id: uuid4
+    group_id: uuid4
+    sender_id: str
     message: Unity[str, Json]
-    timestamp: datetime
+    created_at: datetime
+    updated_at: datetime

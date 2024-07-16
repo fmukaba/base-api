@@ -5,6 +5,7 @@ from uuid import uuid4
 
 load_dotenv()
 
+
 class Settings():
     env_name=os.getenv('ENV', 'LOCAL')
     config_file='app_config.json'
@@ -24,7 +25,13 @@ class Settings():
     # jwt
     jwt_secret: str = os.getenv("JWT_SECRET")
     jwt_algorithm: str = "HS256"
-    jwt_expiry_time: int = 3600 
+    jwt_expiry_time: int = 3600
+    # postgres
+    postgres_user: str = os.getenv("POSTGRES_USER", "admin")
+    postgres_pw: str = os.getenv("POSTGRES_PASSWORD", uuid4().hex)
+    # pgadmin4
+    pgadmin_email: str = os.getenv("PGADMIN_EMAIL", "admin@admin.com")
+    pgadmin_password: str = os.getenv("PGADMIN_PASSWORD", "root")
     
 settings = Settings()
 
