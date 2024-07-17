@@ -9,7 +9,6 @@ db_params = {
     "port": ""
 }
 
-# sql commands for creating tables
 create_messages_table_command = """
         CREATE TABLE Messages (
             id BIGSERIAL PRIMARY KEY,
@@ -19,12 +18,10 @@ create_messages_table_command = """
         )
         """
 
-# add commands to a list
 commands = [
     create_messages_table_command
 ]
 
-# loop through list and execute commands
 try:
     with psycopg2.connect(**db_params) as conn:
         with conn.cursor() as curr:
