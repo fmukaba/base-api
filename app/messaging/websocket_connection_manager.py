@@ -1,12 +1,12 @@
 from fastapi import WebSocket
-from pydantic import Json, Dict
+from pydantic import Json
 
 
 class WebSocketConnectionManager:
 
     def __init__(self):
         # { group_id -> { client_id -> websocket } }
-        self.group_to_active_connections: Dict[int, Dict[int: WebSocket]] = {}
+        self.group_to_active_connections: dict[int, dict[int: WebSocket]] = {}
 
     def group_exists(self, group_id: int):
         return group_id in self.group_to_active_connections

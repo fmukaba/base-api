@@ -1,31 +1,25 @@
-import json
-
+from core.database import get_db
 from fastapi import APIRouter, WebSocket, Depends
+from messaging.crud import create_message
+from messaging.schemas import Message
+from messaging.websocket_connection_manager import WebSocketConnectionManager
 from sqlalchemy.orm import Session
 from starlette.websockets import WebSocketDisconnect
-
-from app.core.database import get_db
-from app.messaging.crud import create_message
-from app.messaging.models import Message
-from app.messaging.websocket_connection_manager import WebSocketConnectionManager
 
 router = APIRouter(
     prefix="/ws",
     tags=["ws"],
-    responses={
-        101: {"description": "Switching Protocols"},
-        404: {"description": "Not found"}
-    }
+    responses={404: {"description": "Not found"}},
 )
 
 websocket_manager = WebSocketConnectionManager()
 
 
-@router.post("/router/test")
+@router.post("/create-message")
 def router_test(data: Message, db: Session = Depends(get_db)):
     try:
-        new_message: Message = create_message(db, data)
-        print(json.dumps(new_message))
+        message = create_message(db, data)
+        return message
     except Exception:
         raise
 
