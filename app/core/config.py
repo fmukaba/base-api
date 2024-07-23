@@ -29,7 +29,6 @@ class Settings:
     database_url: str = os.getenv("DATABASE_URL", "sqlite:///./test.db")
 
     # postgres
-    postgres_url: str = os.getenv("POSTGRES_URL")
     postgres_db: str = os.getenv("POSTGRES_DB")
     postgres_user: str = os.getenv("POSTGRES_USER")
     postgres_password: str = os.getenv("POSTGRES_PASSWORD")
