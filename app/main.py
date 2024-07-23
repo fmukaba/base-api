@@ -1,12 +1,14 @@
-
 import logging
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
+
 from auth.router import router as auth_router
-from users.router import router as users_router
-from notifications.router import router as notifications_router
 from core.config import settings
+from messaging.router import router as messages_router
+from notifications.router import router as notifications_router
+from users.router import router as users_router
 
 logger = logging.getLogger(__name__)
 
@@ -16,7 +18,7 @@ app.add_middleware(SessionMiddleware, secret_key=settings.secret_key)
 
 origins = [
     "http://localhost",
-    "http://localhost:3000",
+    "http://localhost:3000"
 ]
 
 app.add_middleware(
@@ -29,4 +31,5 @@ app.add_middleware(
 
 app.include_router(auth_router)
 app.include_router(users_router)
+app.include_router(messages_router)
 app.include_router(notifications_router)

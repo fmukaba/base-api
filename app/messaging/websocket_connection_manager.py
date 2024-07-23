@@ -1,20 +1,29 @@
 from fastapi import WebSocket
-from pydantic import Json
+from pydantic import Json, Dict
 
 
 class WebSocketConnectionManager:
 
     def __init__(self):
-        self.group_to_active_connections: dict[int, list[WebSocket]] = {}
+        # { group_id -> { client_id -> websocket } }
+        self.group_to_active_connections: Dict[int, Dict[int: WebSocket]] = {}
 
-    async def connect_to_group(self, group_id: int, websocket: WebSocket):
+    def group_exists(self, group_id: int):
+        return group_id in self.group_to_active_connections
+
+    def client_exists(self, client_id: int, group_id: int):
+        if self.group_exists(group_id):
+            return client_id in self.group_to_active_connections[group_id]
+        return False
+
+    async def connect(self, client_id: int, group_id: int, websocket: WebSocket):
         await websocket.accept()
-        self.group_to_active_connections.get(group_id).append(websocket)
+        self.group_to_active_connections[group_id].update({client_id: websocket})
 
-    def disconnect_from_group(self, group_id: int, websocket: WebSocket):
-        self.group_to_active_connections.get(group_id).remove(websocket)
+    def disconnect(self, client_id: int, group_id: int):
+        self.group_to_active_connections.get(group_id).pop(client_id)
 
-    async def broadcast_message_to_group_json(self, group_id: int, message: Json):
+    async def broadcast(self, group_id: int, message: Json):
         active_connections = self.group_to_active_connections.get(group_id)
         for connection in active_connections:
-            await connection.send_json(message)
+            await active_connections[connection].send_json(message)
