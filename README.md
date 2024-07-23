@@ -23,6 +23,12 @@ BaseAPI is a FastAPI backend with Core modules as a base for future freelance pr
   `uvicorn main:app --reload --port 8000`
 - ### use the docker-compose file
   from the root directory run `docker-compose up --build` 
+- ### Migrations with Alembic
+  `alembic init alembic` (only once) </br>
+  simply import your models in `alembic/env.py` and your base metadata (as needed)</br> 
+  `alembic revision --autogenerate -m "<migration_name>"` create migrations </br>
+  `alembic upgrade head`  roll migrations </br>
+  
 ## Note:
   `main.py` origins object contains allowed hosts, make sure your client is in it before sending requests.
-  
+
