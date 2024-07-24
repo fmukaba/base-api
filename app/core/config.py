@@ -28,11 +28,6 @@ class Settings:
     # base database
     database_url: str = os.getenv("DATABASE_URL", "sqlite:///./test.db")
 
-    # postgres
-    postgres_db: str = os.getenv("POSTGRES_DB")
-    postgres_user: str = os.getenv("POSTGRES_USER")
-    postgres_password: str = os.getenv("POSTGRES_PASSWORD")
-
     # redis
     redis_url: str = os.getenv("REDIS_URL", "redis://localhost:6379")
 

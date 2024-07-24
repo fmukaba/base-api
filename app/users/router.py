@@ -5,7 +5,7 @@ from notifications.utils import send_verification_email
 from users.crud import get_user_by_email, create_user, get_user_by_id, update_user
 from users.schemas import User, UserCreate
 from users.models import User as UserModel
-from users.utils import generate_verification_token, verify_token
+from users.utils import generate_verification_token, verify_email_token
 from core.database import get_db
 from core.config import settings
 
@@ -31,7 +31,7 @@ def create_user_route(user: UserCreate, background_tasks: BackgroundTasks, db: S
 
 @router.get("/verify-email/{token}")
 async def verify_email(token: str, db: Session = Depends(get_db)):
-    user_id: int = verify_token(token)
+    user_id: int = verify_email_token(token)
     user: UserModel = get_user_by_id(db, user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
