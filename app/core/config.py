@@ -1,6 +1,5 @@
 import os
 from datetime import timedelta
-from datetime import timedelta
 from uuid import uuid4
 
 from dotenv import load_dotenv
