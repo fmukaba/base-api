@@ -1,9 +1,8 @@
-version: '3.9'
-
 services:
   fastapi:
     build: .
     container_name: fastapi_app
+    restart: always
     ports:
       - "8000:8000"
     environment:
@@ -11,6 +10,7 @@ services:
       - REDIS_URL=redis://redis:6379/0
       - FERNET_KEY=${FERNET_KEY}
       - JWT_SECRET=${JWT_SECRET}
+      - DATABASE_URL=${DATABASE_URL}
     depends_on:
       - redis
       - postgres
@@ -31,3 +31,5 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
