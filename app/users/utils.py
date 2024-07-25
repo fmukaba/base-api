@@ -11,7 +11,7 @@ def generate_verification_token(user_id: int) -> str:
     }
     return jwt.encode(payload, settings.jwt_secret, settings.jwt_algorithm)
 
-def verify_token(token: str) -> Optional[int]:
+def verify_email_token(token: str) -> Optional[int]:
     try:
         payload = jwt.decode(token, settings.jwt_secret, algorithms=[settings.jwt_algorithm])
         return payload['user_id']
