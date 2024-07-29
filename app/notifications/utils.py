@@ -3,16 +3,16 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from fastapi import HTTPException
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, Template
 from core.config import settings
 from notifications.schemas import EmailSchema
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-templates_dir = os.path.join(current_dir, 'templates')
+parent_dir = os.path.dirname(current_dir)
+templates_dir = os.path.join(parent_dir, 'templates')
 
 # Setup Jinja2 environment
 env = Environment(loader=FileSystemLoader(templates_dir))
-template = env.get_template('email_verification.html')
 
 def send_email(email: MIMEMultipart):
     try:
@@ -23,11 +23,12 @@ def send_email(email: MIMEMultipart):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Email could not be sent: {str(e)}")
     
-def send_verification_email(email: EmailSchema, verification_url: str):
+
+def send_email_with_link(email: EmailSchema, template: Template, url: str):
     html_content = template.render(
         subject=email.subject,
         recipient_name=email.target,
-        verification_url=verification_url
+        url=url
     )
 
     msg = MIMEMultipart('alternative')
@@ -38,4 +39,11 @@ def send_verification_email(email: EmailSchema, verification_url: str):
     msg.attach(MIMEText(html_content, 'html'))
     
     send_email(msg)
+
+def send_verification_email(email: EmailSchema, verification_url: str):
+    template = env.get_template('email_verification.html')
+    send_email_with_link(email, template, verification_url)
      
+def send_reset_password_email(email: EmailSchema, reset_url: str):
+    template = env.get_template('reset_password_email.html')
+    send_email_with_link(email, template, reset_url)
