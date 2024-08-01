@@ -11,6 +11,7 @@ class Settings:
     env_name = os.getenv('ENV', 'LOCAL')
     config_file = 'app_config.json'
     api_host: str = "http://127.0.0.1:8000"
+    frontend_host: str = "http://127.0.0.1:3000"
     secret_key: str = os.getenv("SECRET_KEY", uuid4().hex)
     fernet_key: str = os.getenv("FERNET_KEY", uuid4().hex)
 
